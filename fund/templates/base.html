@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>{% block htmltitle %}深圳大学学生活动经费审批系统{% endblock %}</title>
+    {% load static %}
+  <!-- CSS  -->
+    <link href="{% static 'css/iconfont.css' %}" type="text/css" rel="stylesheet">
+    <link href="{% static 'css/materialize.min.css' %}" type="text/css" rel="stylesheet" media="screen,projection">
+    <link href="{% static 'css/style.css' %}" type="text/css" rel="stylesheet" media="screen,projection">
+</head>
+<body>
+  <nav class="nav-extended teal lighten-2">
+    <div class="nav-wrapper container">
+      <a href="/" class="white-text">深圳大学学生活动经费审批系统</a>
+      <a href="/" data-activates="mobile-demo" class="button-collapse"  id="nav_btn"><i class="iconfont icon-menu" style="font-size:0.8rem"></i></a>
+      <ul class="right hide-on-med-and-down" id="nav_bar">
+        <li><a href="#!">{{username}}</a></li>
+        <li></i><a href="/password_change/">修改密码</a></li>
+        <li><a href="/logout_to_login/">退出</a></li>
+      </ul>
+      <ul class="side-nav" id="mobile-demo">
+        <li>
+          <div class="user-view" style="background-color:darkslategrey">
+            <a><span class="white-text" style="font-size:1.5rem">{{username}}</span></a>
+          </div>
+        </li>
+        <li><a class="waves-effect" href="/">首页</a></li>
+        <li><div class="divider"></div></li>
+        <li><a class="subheader">账户管理</a></li>
+        <li><a class="waves-effect" href="/password_change/">修改密码</a></li>
+        <li><div class="divider"></div></li>
+        <li><a class="waves-effect" href="/logout_to_login/">退出</a></li>
+      </ul>
+    </div>
+      <div class="nav-content container">
+
+       <span class="nav-title">{% block nav-title %} 深圳大学学生活动经费审批系统 {% endblock %}</span>
+       <a class="btn-floating btn-large halfway-fab waves-effect waves-light amber" href="apply/" id="add_button" style="display:none">
+        <i class="iconfont" style="font-size:30px;text-align:top;">+</i>
+      </a>
+    </div>
+  </nav>
+  
+  <div class="container">
+    <br><br>
+    {% block main_container %}
+    {% endblock %}
+    <br><br>
+  </div>
+
+ <footer class="page-footer grey lighten-2">
+    <div class="container">
+        <div class="row">
+            <div class="col l6 s12">
+                <h5 class="black-text">在使用中出现问题？</h5>
+                <p class="black-text text-lighten-4">如果在使用过程中出现问题，请在学子天地公众号留言，或者在我们的值班时间（周一到周五第3~4节、第5~8节课）期间到西南综合楼112学子天地办公室告知我们的值班同学，我们将会尽快解决！</p>
+            </div>
+            <div class="col l4 offset-l2 s12">
+                <h5 class="black-text">关注学子天地公众号</h5>
+                <img src="{% static 'img/barcode.jpg' %}" height="200" width="200" >
+              </div>
+            </div>
+          </div>
+          <div class="footer-copyright">
+            <div class="container black-text">
+            © 2017 <a class="black-text text-lighten-4" href="http://stu.szu.edu.cn">学子天地</a>·技术部 版权所有
+            </div>
+          </div>
+        </footer>
+
+
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="{% static 'js/vue.js' %}"></script>
+  <script src="{% static 'js/materialize.min.js' %}"></script>
+  <script src="{% static 'js/init.js' %}"></script>
+
+  </body>
+</html>
