@@ -22,7 +22,11 @@ from django.contrib.auth import views as auth_views
 from fund import views as fund_views
 
 urlpatterns = [
-    url(r'^$', include('fund.urls')),
+    url(r'^$', fund_views.index, name='index'),
+    url(r'^(?P<fund_id>[0-9]+)/$', fund_views.detail, name='detail'),
+    url(r'^(?P<fund_id>[0-9]+)/approve', fund_views.approve, name='approve'),
+    url(r'^(?P<fund_id>[0-9]+)/deny', fund_views.deny, name='deny'),
+    url(r'^apply/$', fund_views.apply, name='apply'), 
     url(r'^admin/', admin.site.urls),
     url(r'^upload/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
     url(r'^login/', auth_views.login, {'template_name': 'account/sign_in.html'},name='login'),
