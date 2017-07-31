@@ -23,17 +23,17 @@ from django.contrib.auth.models import User, Group
 def index(request):
     now_user = request.user
     if now_user.has_perm(perm="fund.student_approve"):
-        show_add_button = False
+        student_view = False
         stucon_view = True
         fund_objects = Fund.objects.all()
     else:
         if now_user.has_perm(perm="fund.teacher_approve"):
-            show_add_button = False
+            student_view = False
             stucon_view = False
             fund_objects = (Fund.objects.filter(is_objected=False, is_viewed_by_student=True) | Fund.objects.filter( is_viewed_by_teacher=True))
         else:
             if now_user.has_perm(perm="fund.apply_only"):
-                show_add_button = True
+                student_view = True
                 stucon_view = False
                 fund_objects = Fund.objects.filter(username = now_user.username)
     fund_list = sorted(fund_objects, key=attrgetter('id'), reverse=True)
@@ -46,7 +46,7 @@ def index(request):
     except EmptyPage:
         fund_list = paginator.page(paginator.num_pages)
     context = {
-        'show_add_button': show_add_button,
+        'student_view': student_view,
         'stucon_view': stucon_view,
         'username': request.user.username,
         'fund_list': fund_list,

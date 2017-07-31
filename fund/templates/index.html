@@ -4,7 +4,7 @@
 
 {% block main_container %}
 
-{% if show_add_button %}
+{% if student_view %}
         <script>
             document.getElementById('add_button').style.display = "block"
         </script>
@@ -18,7 +18,7 @@
                     <div class="card-content">
                         <span class="card-title">{{ fund.name }}
                             <div class="right">
-                                {% if not show_add_button %}
+                                {% if not student_view %}
                                     {% if stucon_view %}
                                         {% if fund.is_objected %}
                                         <a class="red btn">已否决</a>
@@ -79,8 +79,12 @@
         <div class="row">
           <div class="col s12 m6 offset-m3">
             <div class="card-panel pink darken-1">
-                <span class="white-text">当前没有申请!</span>
-                <p class="white-text">点击右上角黄色按钮可以提交新申请</p>
+                {% if student_view %}
+                    <span class="white-text">当前没有申请!</span>
+                    <p class="white-text">点击右上角黄色按钮可以提交新申请</p>
+                {% else %}
+                    <span class="white-text">当前没有需要审批的申请!</span>
+                {% endif %}
             </div>
           </div>
         </div>
@@ -96,10 +100,12 @@
         </div>
 
         <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        {% if student_view %}
         <script>
             $(document).ready(function(){
             $('.tap-target').tapTarget('open');
             });
         </script>
+        {% endif %}
     {% endif %}
 {% endblock %}
