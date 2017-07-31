@@ -158,10 +158,11 @@ def SignUpView(request):
                 login(request, authenticate(username=username, password=password))
                 return HttpResponseRedirect('/')
         else:
+            error = SignUpForm.errors
             SignUpForm = UserForm
             context = {
                 'SignUpForm': SignUpForm,
-                'reason': SignUpForm.errors,
+                'reason': error,
                 'username': request.user.username,
                 }
             return render(request, 'account/sign_up.html', context)
