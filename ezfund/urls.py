@@ -32,7 +32,7 @@ urlpatterns = [
     url(r'^login/', auth_views.login, {'template_name': 'account/sign_in.html'},name='login'),
     url(r'logout_to_login/$', fund_views.logoutnlogin),
     url(r'^password_change/$', auth_views.password_change, {'template_name': 'account/password_change_form.html','post_change_redirect': 
-'/fund/?pwd=success'}, name='password_change'),
+'/?pwd=success'}, name='password_change'),
     url(r'sign_up/$', fund_views.SignUpView, name='sign_up'),
 ]
 #password_change_done是修改成功后重定向的页面，如果需要可以设置
