@@ -17,25 +17,25 @@
 {% endif %}
 
 <div class="row">
-<form class="col s6 offset-s3" method="post">
+<form class="col s12 l6 offset-l3" method="post">
     {% csrf_token %}
     <div class="row">
         <div class="input-field col s12">
-            {{ SignUpForm.username.label_tag }}
+            <label for="id_username">组织名称</label>
             {{ SignUpForm.username }}
         </div>
     </div>
 
     <div class="row">
         <div class="input-field col s12">
-            {{ SignUpForm.email.label_tag }}
+            <label for="id_email" data-error="邮箱格式错误">电子邮箱</label>
             {{ SignUpForm.email }}
         </div>
     </div>
 
     <div class="row">
         <div class="input-field col s12">
-            {{ SignUpForm.password.label_tag }}
+            <label for="id_password">密码</label>
             {{ SignUpForm.password }}
         </div>
     </div>
