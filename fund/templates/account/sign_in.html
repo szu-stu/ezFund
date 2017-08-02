@@ -17,18 +17,18 @@
 {% endif %}
 
 <div class="row">
-    <form class="col s12 l8 offset-l2" method="post" action="{% url 'login' %}">
+    <form class="col s12 l6 offset-l3" method="post" action="{% url 'login' %}">
         {% csrf_token %}
         <div class="row">
             <div class="input-field col s12">
-                {{ form.username.label_tag }}
+                <label for="id_username">组织名称</label>
                 {{ form.username }}
             </div>
         </div>
 
         <div class="row">
             <div class="input-field col s12">
-                {{ form.password.label_tag }}
+                <label for="id_password">密码</label>
                 {{ form.password }}
             </div>
         </div>
