@@ -47,23 +47,30 @@ def index(request):
         fund_list = paginator.page(1)
     except EmptyPage:
         fund_list = paginator.page(paginator.num_pages)
-
-    pc_list = sorted(paycheck_objects, key=attrgetter('id'), reverse=True)
-    paginator4pc = Paginator(fund_list, 10)
-    pc_page = request.GET.get('page')
-    try:
-        pc_list = paginator4pc.page(pc_page)
-    except PageNotAnInteger:
-        pc_list = paginator4pc.page(1)
-    except EmptyPage:
-        pc_list = paginator4pc.page(paginator4pc.num_pages)
-    context = {
-        'student_view': student_view,
-        'stucon_view': stucon_view,
-        'username': request.user.username,
-        'fund_list': fund_list,
-        'paycheck_list':pc_list,
-    }
+    if now_user.has_perm(perm="fund.student_approve") or now_user.has_perm(perm="fund.teacher_approve"):
+        pc_list = sorted(paycheck_objects, key=attrgetter('id'), reverse=True)
+        paginator4pc = Paginator(fund_list, 10)
+        pc_page = request.GET.get('page')
+        try:
+            pc_list = paginator4pc.page(pc_page)
+        except PageNotAnInteger:
+            pc_list = paginator4pc.page(1)
+        except EmptyPage:
+            pc_list = paginator4pc.page(paginator4pc.num_pages)
+        context = {
+            'student_view': student_view,
+            'stucon_view': stucon_view,
+            'username': request.user.username,
+            'fund_list': fund_list,
+            'paycheck_list':pc_list,
+        }
+    else:
+        context = {
+            'student_view': student_view,
+            'stucon_view': stucon_view,
+            'username': request.user.username,
+            'fund_list': fund_list,
+        }
     return render(request, 'index.html', context)
 
 
