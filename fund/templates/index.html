@@ -64,7 +64,7 @@
                     <a class="teal-text" href="/upload/{{ fund.plan_file }}">下载附件</a>
                     <a class="teal-text" href="/{{ fund.id }}/">详情</a>
                     {% if fund.is_viewed_by_teacher and fund.is_viewed_by_student and student_view %}
-                    <a class="teal-text" href="/paycheck/{{ fund.id }}/">上传结算表</a>
+                    <a class="teal-text" href="/{{ fund.id }}/upload_paycheck">上传结算表</a>
                     {% endif %}
                 </div>
             </div>
@@ -193,7 +193,6 @@
         <h5>欢迎使用！</h5>
         <p>点击这里开始提交申请</p>
         <br>
-
         </br>
     </div>
 </div>
