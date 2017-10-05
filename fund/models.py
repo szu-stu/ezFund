@@ -23,6 +23,16 @@ class Fund(models.Model):
     is_viewed_by_student = models.BooleanField(default=False)
     is_viewed_by_teacher = models.BooleanField(default=False)
     is_objected = models.BooleanField(default=False)
+    paycheck_file = models.FileField(upload_to='%y/%m/%d/paycheck_file',blank = True)
+    pc_stat = (
+            ("not_uploaded", "等待提交结算表"),
+            ("applied", "已提交结算表，等待审核"),
+            ("stucon_approved", "学代已审核结算表"),
+            ("stucon_disapproved", "结算表未通过学代审核"),
+            ("teacher_approved", "老师已审核结算表"),
+            ("teacher_disapproved", "结算表未通过老师审核"),
+        )
+    paycheck_status = models.CharField(max_length=30,choices=pc_stat,default="not_uploaded")
 
     def __str__(self):
         return self.name
@@ -42,3 +52,10 @@ class Fund(models.Model):
                     return u"团委书记否决"
                 else:
                     return u"学代否决"
+
+    def paycheck_to_display(self):
+        if self.paycheck_status != "not_uploaded":
+            return True
+        else:
+            return False
+

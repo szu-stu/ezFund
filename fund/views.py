@@ -10,7 +10,7 @@ from django.core.paginator import EmptyPage
 
 from operator import itemgetter, attrgetter
 
-from .forms import FundForm, UserForm
+from .forms import FundForm, UserForm, PaycheckForm
 from .check_per import detial_cp_decorator, apply_cp_decorator
 
 from django.contrib.auth import views as auth_views
@@ -26,11 +26,13 @@ def index(request):
         student_view = False
         stucon_view = True
         fund_objects = Fund.objects.all()
+        paycheck_objects = Fund.objects.filter(paycheck_to_display=True)
     else:
         if now_user.has_perm(perm="fund.teacher_approve"):
             student_view = False
             stucon_view = False
             fund_objects = (Fund.objects.filter(is_objected=False, is_viewed_by_student=True) | Fund.objects.filter( is_viewed_by_teacher=True))
+            paycheck_objects = (Fund.objects.filter(paycheck_status = "stucon_approved") | Fund.objects.filter(paycheck_status = "teacher_approved"))
         else:
             if now_user.has_perm(perm="fund.apply_only"):
                 student_view = True
@@ -45,11 +47,22 @@ def index(request):
         fund_list = paginator.page(1)
     except EmptyPage:
         fund_list = paginator.page(paginator.num_pages)
+
+    pc_list = sorted(paycheck_objects, key=attrgetter('id'), reverse=True)
+    paginator4pc = Paginator(fund_list, 10)
+    pc_page = request.GET.get('page')
+    try:
+        pc_list = paginator4pc.page(pc_page)
+    except PageNotAnInteger:
+        pc_list = paginator4pc.page(1)
+    except EmptyPage:
+        pc_list = paginator4pc.page(paginator4pc.num_pages)
     context = {
         'student_view': student_view,
         'stucon_view': stucon_view,
         'username': request.user.username,
         'fund_list': fund_list,
+        'paycheck_list':pc_list,
     }
     return render(request, 'index.html', context)
 
@@ -67,12 +80,15 @@ def detail(request, fund_id):
         stucon_view = True
     else:
         stucon_view = False
+    if fund.paycheck_file:
+        pc = True
     content = {
         'username': request.user.username,
         'fund': fund,
         'fund_stat': fund.fund_status(),
         'show_work_btn': work_btn,
         'stucon_view': stucon_view,
+        'paycheck_uploaded': pc,
     }
     return render(request, 'detail.html', content)
 
@@ -103,6 +119,36 @@ def apply(request):
 
 
 @login_required(login_url='/login/')
+@apply_cp_decorator
+def upload_paycheck(request, fund_id):
+    now_user = request.user
+    app_fund = get_object_or_404(Fund, pk=fund_id)
+    if request.method == 'POST':
+        form = PaycheckForm(request.POST, request.FILES)
+        if form.is_valid():
+            app_fund.paycheck_file = form.paycheck_file
+            app_fund.paycheck_status = "applied"
+            app_fund.save()
+            success = True
+            return render(request, 'upload_paycheck.html', {'success':success})
+        else:
+            error = form.errors
+            form = PaycheckForm
+            context = {
+                'error':error,
+                'form':form,
+            }
+            return render(request, 'upload_paycheck.html', context)
+    else:
+            form = PaycheckForm
+            context = {
+                'fund': app_fund,
+                'form': form,
+            }
+    return render(request, 'upload_paycheck.html', context)
+
+#预算表审核模块
+@login_required(login_url='/login/')
 def approve(request, fund_id):
     now_user = request.user
     if now_user.has_perm(perm="fund.student_approve"):
@@ -130,6 +176,37 @@ def deny(request, fund_id):
             app_fund = get_object_or_404(Fund, pk=fund_id)
             app_fund.is_viewed_by_teacher = True
             app_fund.is_objected = True
+            app_fund.save()
+    return detail(request, fund_id)
+
+
+#结算表审核模块
+@login_required(login_url='/login/')
+def paycheck_approve(request, fund_id):
+    now_user = request.user
+    if now_user.has_perm(perm="fund.student_approve"):
+        app_fund = get_object_or_404(Fund, pk=fund_id)
+        app_fund.paycheck_status = "stucon_approved"
+        app_fund.save()
+    else:
+        if now_user.has_perm(perm="fund.teacher_approve"):
+            app_fund = get_object_or_404(Fund, pk=fund_id)
+            app_fund.paycheck_status = "teacher_approved"
+            app_fund.save()
+    return detail(request, fund_id)
+
+
+@login_required(login_url='/login/')
+def paycheck_deny(request, fund_id):
+    now_user = request.user
+    if now_user.has_perm(perm="fund.student_approve"):
+        app_fund = get_object_or_404(Fund, pk=fund_id)
+        app_fund.paycheck_status = "stucon_disapproved"
+        app_fund.save()
+    else:
+        if now_user.has_perm(perm="fund.teacher_approve"):
+            app_fund = get_object_or_404(Fund, pk=fund_id)
+            app_fund.paycheck_status = "teacher_disapproved"
             app_fund.save()
     return detail(request, fund_id)
 
