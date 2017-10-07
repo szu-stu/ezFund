@@ -70,7 +70,7 @@
                 <div class="card-action">
                     <a class="teal-text" href="/upload/{{ fund.plan_file }}">下载附件</a>
                     <a class="teal-text" href="/{{ fund.id }}/">详情</a>
-                    {% if paycheck_status == "not_uploaded" and student_view %}
+                    {% if student_view %}
                     <a class="teal-text" href="/{{ fund.id }}/upload_paycheck">上传结算表</a>
                     {% endif %}
                 </div>
