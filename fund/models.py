@@ -52,10 +52,10 @@ class Fund(models.Model):
                     return u"团委书记否决"
                 else:
                     return u"学代否决"
-
+'''
     def paycheck_to_display(self):
         if self.paycheck_status != "not_uploaded":
             return True
         else:
             return False
-
+'''

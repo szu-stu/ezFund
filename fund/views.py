@@ -26,7 +26,7 @@ def index(request):
         student_view = False
         stucon_view = True
         fund_objects = Fund.objects.all()
-        paycheck_objects = Fund.objects.filter(paycheck_to_display=True)
+        paycheck_objects = Fund.objects.exclude(paycheck_status="not_uploaded")
     else:
         if now_user.has_perm(perm="fund.teacher_approve"):
             student_view = False
