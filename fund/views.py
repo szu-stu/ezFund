@@ -133,7 +133,7 @@ def upload_paycheck(request, fund_id):
     if request.method == 'POST':
         form = PaycheckForm(request.POST, request.FILES)
         if form.is_valid():
-            app_fund.paycheck_file = form.paycheck_file
+            app_fund.paycheck_file = request.FILES
             app_fund.paycheck_status = "applied"
             app_fund.save()
             success = True
