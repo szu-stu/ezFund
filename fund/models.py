@@ -25,12 +25,12 @@ class Fund(models.Model):
     is_objected = models.BooleanField(default=False)
     paycheck_file = models.FileField(upload_to='%y/%m/%d/paycheck_file',blank = True)
     pc_stat = (
-            ("not_uploaded", "等待提交结算表"),
-            ("applied", "已提交结算表，等待审核"),
-            ("stucon_approved", "学代已审核结算表"),
-            ("stucon_disapproved", "结算表未通过学代审核"),
-            ("teacher_approved", "老师已审核结算表"),
-            ("teacher_disapproved", "结算表未通过老师审核"),
+            ("not_uploaded", u"等待提交结算表"),
+            ("applied", u"已提交结算表，等待审核"),
+            ("stucon_approved", u"学代已审核结算表"),
+            ("stucon_disapproved", u"结算表未通过学代审核"),
+            ("teacher_approved", u"老师已审核结算表"),
+            ("teacher_disapproved", u"结算表未通过老师审核"),
         )
     paycheck_status = models.CharField(max_length=30,choices=pc_stat,default="not_uploaded")
 
