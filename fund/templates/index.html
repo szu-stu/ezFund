@@ -13,8 +13,8 @@
 {% if not student_view %}
 <div class="row" id="tabby">
     <div class="col s12">
-        <ul class="tabs">
-            <li class="tab col s6 m3 offset-m3 "><a class="active" href="#page_fund">预算</a></li>
+        <ul class="tabs teal-text text-lighten-2">
+            <li class="tab col s6 m3 offset-m3"><a class="active" href="#page_fund">预算</a></li>
             <li class="tab col s6 m3"><a href="#page_paycheck">结算</a></li>
         </ul>
     </div>
@@ -119,9 +119,9 @@
                         <span class="card-title">{{ fund.name }}
                             <div class="right">
                                 {% if stucon_view %}
-                                    {% if fund.is_objected %}
+                                    {% if fund.paycheck_status == "stucon_disapproved" %}
                                         <a class="red btn">已否决</a>
-                                    {% elif fund.is_viewed_by_student %}
+                                    {% elif fund.paycheck_status == "stucon_approved" %}
                                         <a class="green btn">已批准</a>
                                     {% else %}
                                         <a class="waves-effect green waves-light btn"
@@ -129,9 +129,9 @@
                                         <a class="waves-effect red waves-light btn" href="/{{ fund.id }}/paycheck_deny">否决</a>
                                     {% endif %}
                                 {% else %}
-                                    {% if fund.is_objected %}
+                                    {% if fund.paycheck_status == "teacher_disapproved" %}
                                     <a class="red btn">已否决</a>
-                                    {% elif fund.is_viewed_by_teacher and fund.is_viewed_by_student %}
+                                    {% elif fund.paycheck_status == "teacher_approved" %}
                                     <a class="green btn">已批准</a>
                                     {% else %}
                                     <a class="waves-effect green waves-light btn"

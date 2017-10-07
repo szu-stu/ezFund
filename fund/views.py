@@ -49,7 +49,7 @@ def index(request):
         fund_list = paginator.page(paginator.num_pages)
     if now_user.has_perm(perm="fund.student_approve") or now_user.has_perm(perm="fund.teacher_approve"):
         pc_list = sorted(paycheck_objects, key=attrgetter('id'), reverse=True)
-        paginator4pc = Paginator(fund_list, 10)
+        paginator4pc = Paginator(pc_list, 10)
         pc_page = request.GET.get('page')
         try:
             pc_list = paginator4pc.page(pc_page)
