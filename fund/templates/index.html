@@ -14,15 +14,15 @@
 {% if not student_view %}
 <div class="row" id="tabby">
     <div class="col s12">
-        <ul class="tabs">
-            <li class="tab col s3"><a class="active" href="#fund">预算</a></li>
-            <li class="tab col s3"><a href="#paycheck">结算</a></li>
+        <ul class="tabs teal">
+            <li class="tab col s3"><a class="active" href="#page_fund">预算</a></li>
+            <li class="tab col s3"><a href="#page_paycheck">结算</a></li>
         </ul>
     </div>
 </div>
 {% endif %}
 
-<div id="page_fund">
+<div id="page_fund" class="col s12">
     {% if fund_list %}
     {% for fund in fund_list %}
     <div class="row">
@@ -110,7 +110,7 @@
 </div>
 
 {% if not student_view %}
-<div id="page_paycheck">
+<div id="page_paycheck" class="col s12">
     {% if paycheck_list %}
     {% for fund in paycheck_list %}
     <div class="row">
