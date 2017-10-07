@@ -89,6 +89,8 @@ def detail(request, fund_id):
         stucon_view = False
     if fund.paycheck_file:
         pc = True
+    else:
+        pc = False
     content = {
         'username': request.user.username,
         'fund': fund,
