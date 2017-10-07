@@ -26,13 +26,13 @@ def index(request):
         student_view = False
         stucon_view = True
         fund_objects = Fund.objects.all()
-        paycheck_objects = Fund.objects.filter(paycheck_to_display=True)
+        paycheck_objects = Fund.objects.exclude(paycheck_status="not_uploaded")
     else:
         if now_user.has_perm(perm="fund.teacher_approve"):
             student_view = False
             stucon_view = False
             fund_objects = (Fund.objects.filter(is_objected=False, is_viewed_by_student=True) | Fund.objects.filter( is_viewed_by_teacher=True))
-            paycheck_objects = (Fund.objects.filter(paycheck_status = "stucon_approved") | Fund.objects.filter(paycheck_status = "teacher_approved"))
+            paycheck_objects =( Fund.objects.exclude(paycheck_status="not_uploaded") | Fund.objects.exclude(paycheck_status="applied")| Fund.objects.exclude(paycheck_status="stucon_disapproved"))
         else:
             if now_user.has_perm(perm="fund.apply_only"):
                 student_view = True

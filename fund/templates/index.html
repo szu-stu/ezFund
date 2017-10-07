@@ -14,8 +14,8 @@
 <div class="row" id="tabby">
     <div class="col s12">
         <ul class="tabs teal-text text-lighten-2">
-            <li class="tab col s6 m3 offset-m3 teal-text text-lighten-2"><a class="active" href="#page_fund">预算</a></li>
-            <li class="tab col s6 m3 teal-text text-lighten-2"><a href="#page_paycheck">结算</a></li>
+            <li class="tab col s6 m3 offset-m3"><a class="active teal-text text-lighten-2" href="#page_fund">预算</a></li>
+            <li class="tab col s6 m3"><a class="teal-text text-lighten-2" href="#page_paycheck">结算</a></li>
         </ul>
     </div>
 </div>
@@ -122,22 +122,22 @@
                                     {% if fund.paycheck_status == "stucon_disapproved" %}
                                         <a class="red btn">已否决</a>
                                     {% elif fund.paycheck_status == "stucon_approved" %}
-                                        <a class="green btn">已批准</a>
+                                        <a class="green btn">已通过</a>
                                     {% else %}
                                         <a class="waves-effect green waves-light btn"
-                                           href="/{{ fund.id }}/paycheck_approve">批准</a>
-                                        <a class="waves-effect red waves-light btn" href="/{{ fund.id }}/paycheck_deny">否决</a>
+                                           href="/{{ fund.id }}/paycheck_approve">通过</a>
+                                        <a class="waves-effect red waves-light btn" href="/{{ fund.id }}/paycheck_deny">不通过</a>
                                     {% endif %}
                                 {% else %}
                                     {% if fund.paycheck_status == "teacher_disapproved" %}
                                     <a class="red btn">已否决</a>
                                     {% elif fund.paycheck_status == "teacher_approved" %}
-                                    <a class="green btn">已批准</a>
+                                    <a class="green btn">已通过</a>
                                     {% else %}
                                     <a class="waves-effect green waves-light btn"
-                                       href="/{{ fund.id }}/paycheck_approve">批准</a>
+                                       href="/{{ fund.id }}/paycheck_approve">通过</a>
                                     <a class="waves-effect red waves-light btn"
-                                       href="/{{ fund.id }}/paycheck_deny">否决</a>
+                                       href="/{{ fund.id }}/paycheck_deny">不通过</a>
                                     {% endif %}
                                 {% endif %}
                             </div>
@@ -149,7 +149,7 @@
                 <div class="card-action">
                     <a class="teal-text" href="/upload/{{ fund.plan_file }}">下载附件</a>
                     <a class="teal-text" href="/{{ fund.id }}/">详情</a>
-                    <a class="teal-text" href="/upload/{{ fund.plan_file }}/">下载结算表</a>
+                    <a class="teal-text" href="/upload/{{ fund.paycheck_file }}/">下载结算表</a>
                 </div>
             </div>
         </div>
