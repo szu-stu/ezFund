@@ -32,7 +32,7 @@ class Fund(models.Model):
             "teacher_approved": "老师已审核结算表",
             "teacher_disapproved": "结算表未通过老师审核",
     }
-    paycheck_status = models.CharField(max_length=30,choices=pc_stat,default="not_uploaded")
+    paycheck_status = models.CharField(max_length=30,choices=pc_stat.keys(),default="not_uploaded")
 
     def __str__(self):
         return self.name
