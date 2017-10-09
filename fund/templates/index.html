@@ -156,7 +156,7 @@
                         </span>
                     <p>申请时间：{{ fund.apply_date }}</p>
                     <p>申请者：{{ fund.username }}</p>
-                    <p>结算状态：{{ dict[fund.paycheck_status] }}</p>
+                    <p>结算状态：{{ fund.pc_stat[fund.paycheck_status] }}</p>
                 </div>
                 <div class="card-action">
                     <a class="teal-text" href="/upload/{{ fund.plan_file }}">下载附件</a>
