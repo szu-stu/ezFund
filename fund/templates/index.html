@@ -135,9 +135,8 @@
                                         <a class="red btn">已否决</a>
                                     {% elif fund.paycheck_status == "stucon_approved" %}
                                         <a class="green btn">已通过</a>
-                                    {% else %}
-                                        <a class="waves-effect green waves-light btn"
-                                           href="/{{ fund.id }}/paycheck_approve">通过</a>
+                                    {% elif fund.paycheck_status == "applied" %}
+                                        <a class="waves-effect green waves-light btn" href="/{{ fund.id }}/paycheck_approve">通过</a>
                                         <a class="waves-effect red waves-light btn" href="/{{ fund.id }}/paycheck_deny">不通过</a>
                                     {% endif %}
                                 {% else %}
@@ -145,7 +144,7 @@
                                     <a class="red btn">已否决</a>
                                     {% elif fund.paycheck_status == "teacher_approved" %}
                                     <a class="green btn">已通过</a>
-                                    {% else %}
+                                    {% elif fund.paycheck_status == "stucon_approved" %}
                                     <a class="waves-effect green waves-light btn"
                                        href="/{{ fund.id }}/paycheck_approve">通过</a>
                                     <a class="waves-effect red waves-light btn"
