@@ -72,8 +72,14 @@
           </div>
         </div>
         <div class="row">
-            <div class="input-field col s12">
-              <span>活动策划书:{{ form.plan_file }}</span>
+            <div class="file-field input-field">
+                <div class="btn">
+                    <span>点击上传</span>
+                    <input type="file" name="plan_file" required id="id_plan_file">
+                  </div>
+                  <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text" placeholder="活动策划书">
+                  </div>
             </div>
         </div>
         <div class="row">

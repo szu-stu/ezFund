@@ -13,4 +13,7 @@ class UserForm(forms.Form):
     email = forms.EmailField(label='邮箱地址', max_length=50)
     password = forms.CharField(label='密码', max_length=100,min_length=8,widget=forms.PasswordInput)
 
+class PaycheckForm(forms.Form):
+    paycheck_file = forms.FileField(label='上传文件')
+
     
