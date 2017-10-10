@@ -49,7 +49,24 @@
                             {% if fund.paycheck_file %}
                             <tr>
                                 <td>结算表：<a href="/upload/{{ fund.paycheck_file }}">点击下载</a></td>
-                                <td>结算表状态：{{ fund.paycheck_status }}</td>
+                                <td>
+                                    结算表状态：
+                                    {%ifequal fund.paycheck_status "applied" %}
+                                    已提交结算表，等待审核
+                                    {% endifequal %}
+                                    {%ifequal fund.paycheck_status "stucon_approved" %}
+                                    学代已审核结算表
+                                    {% endifequal %}
+                                    {%ifequal fund.paycheck_status "stucon_disapproved" %}
+                                    结算表未通过学代审核
+                                    {% endifequal %}
+                                    {%ifequal fund.paycheck_status "teacher_approved" %}
+                                    老师已审核结算表
+                                    {% endifequal %}
+                                    {%ifequal fund.paycheck_status "teacher_disapproved" %}
+                                    结算表未通过老师审核
+                                    {% endifequal %}
+                                </td>
                             </tr>
                             {% endif %}
                         </table>
