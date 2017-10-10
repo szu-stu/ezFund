@@ -16,7 +16,7 @@
 </div>
 {% endif %}
 
-<div class="row">
+<div-- class="row">
     <form class="col s12 l6 offset-l3" method="post" action="{% url 'login' %}">
         {% csrf_token %}
         <div class="row">
@@ -31,10 +31,6 @@
                 <label for="id_password">密码</label>
                 {{ form.password }}
             </div>
-        </div>
-
-        <div style="margin: 0 auto; text-align:center;padding-top:20px;">
-            <a href="/sign_up/">没有账号？请注册</a>
         </div>
 
         <div class="mid-container" style="margin: 0 auto; text-align:center;padding-top:50px;">
