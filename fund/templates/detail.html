@@ -46,6 +46,12 @@
                             <tr>
                                 <td colspan="2">备注：{{ fund.note }}</td>
                             </tr>
+                            {% if fund.paycheck_file %}
+                            <tr>
+                                <td>结算表：<a href="/upload/{{ fund.paycheck_file }}">点击下载</a></td>
+                                <td>结算表状态：{{ fund.paycheck_status }}</td>
+                            </tr>
+                            {% endif %}
                         </table>
                         <br> </br>
                         <div class="row">

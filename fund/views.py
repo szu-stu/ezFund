@@ -32,7 +32,7 @@ def index(request):
             student_view = False
             stucon_view = False
             fund_objects = (Fund.objects.filter(is_objected=False, is_viewed_by_student=True) | Fund.objects.filter( is_viewed_by_teacher=True))
-            paycheck_objects = (Fund.objects.filter(paycheck_status = "stucon_approved") | Fund.objects.filter(paycheck_status = "teacher_approved"))
+            paycheck_objects =((Fund.objects.exclude(paycheck_status="not_uploaded")).exclude(paycheck_status="applied")).exclude(paycheck_status="stucon_disapproved")
         else:
             if now_user.has_perm(perm="fund.apply_only"):
                 student_view = True
@@ -49,7 +49,7 @@ def index(request):
         fund_list = paginator.page(paginator.num_pages)
     if now_user.has_perm(perm="fund.student_approve") or now_user.has_perm(perm="fund.teacher_approve"):
         pc_list = sorted(paycheck_objects, key=attrgetter('id'), reverse=True)
-        paginator4pc = Paginator(fund_list, 10)
+        paginator4pc = Paginator(pc_list, 10)
         pc_page = request.GET.get('page')
         try:
             pc_list = paginator4pc.page(pc_page)
@@ -89,6 +89,8 @@ def detail(request, fund_id):
         stucon_view = False
     if fund.paycheck_file:
         pc = True
+    else:
+        pc = False
     content = {
         'username': request.user.username,
         'fund': fund,
@@ -133,7 +135,7 @@ def upload_paycheck(request, fund_id):
     if request.method == 'POST':
         form = PaycheckForm(request.POST, request.FILES)
         if form.is_valid():
-            app_fund.paycheck_file = form.paycheck_file
+            app_fund.paycheck_file = request.FILES
             app_fund.paycheck_status = "applied"
             app_fund.save()
             success = True

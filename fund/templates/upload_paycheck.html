@@ -24,16 +24,15 @@
         <div class="col s12">
             <div class="card-panel">
                 <div class="card-content">
-
+                    <div class="row">
+                        <div class="input-field col s12">
+                          <span>上传结算表:{{ form.paycheck_file }}</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-        <div class="row">
-            <div class="input-field col s12">
-              <span>上传结算表:{{ form.paycheck_file }}</span>
-            </div>
-        </div>
         <div class="row">
             <div class="input-field col s4 offset-s5">
                 <button data-target="modal1" class="btn waves-effect waves-light btn-large" type="submit" name="action">上传结算表</button>
